@@ -34,31 +34,33 @@ echo "Script started executing at: $(date)" | tee -a $LOG_FILE
 
 CHECK_ROOT
 
-dnf module disable nodejs -y 
+echo "Script started executing at: $(date)" | tee -a $LOG_FILE
+
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "disabled nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "enabled nodejs"
 
-dnf install nodejs -y 
-VALIDATE $? "installing nodejs"
+dnf install nodejs -y  &>>$LOG_FILE
+VALIDATE $? "installing nodejs
 
-useradd expense
+useradd expense &>>$LOG_FILE
 VALIDATE $? "useradd"
 
-mkdir /app
+mkdir /app &>>$LOG_FILE
 VALIDATE $? "app created"
 
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE
 VALIDATE $? "application code downloaded"
 
 cd /app
 VALIDATE $? "change directory to /app"
 
-unzip /tmp/backend.zip
+unzip /tmp/backend.zip &>>$LOG_FILE
 VALIDATE $? "unzip"
 
 
-npm install 
+npm install &>>$LOG_FILE
 VALIDATE $? "npm installing"
 
