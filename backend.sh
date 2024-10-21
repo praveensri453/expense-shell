@@ -65,14 +65,14 @@ unzip /tmp/backend.zip &>>$LOG_FILE
 VALIDATE $? "Extracting backend application code"
 
 npm install &>>$LOG_FILE
-cp /home/rhel9-4/expense-shell/backend.service /etc/systemd/system/backend.service
+cp /home/rhel9-4/expense-shell/backend.service /etc/systemd/system/backend.service # /home/ec2-user/expense-shell/backend.service
 
 # load the data before running backend
 
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Installing MySQL Client"
 
-mysql -h mysql.daws81s.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE
+mysql -h 192.168.163.148 -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE # dns name or db server private ip
 VALIDATE $? "Schema loading"
 
 systemctl daemon-reload &>>$LOG_FILE
